@@ -72,7 +72,7 @@ export async function ensureDeps() {
     if (!existsSync(pkgDir)) {
       // Package not installed at all
       try {
-        execSync(`${process.platform === "win32" ? "npm.cmd" : "npm"} install ${pkg} --no-package-lock --no-save --silent`, {
+        execSync(`${process.platform === "win32" ? "npm.cmd" : "npm"} install ${pkg} --no-package-lock --no-save --silent --no-bin-links`, {
           cwd: root,
           stdio: "pipe",
           timeout: 120000,

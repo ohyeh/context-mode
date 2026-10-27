@@ -398,7 +398,7 @@ export function healBetterSqlite3Binding(pkgRoot) {
     // own install script. Avoids the rebuild → node-gyp fall-through.
     try {
       execSync(
-        `${npmBin} install better-sqlite3 --no-package-lock --no-save --silent`,
+        `${npmBin} install better-sqlite3 --no-package-lock --no-save --silent --no-bin-links`,
         { cwd: pkgRoot, stdio: "pipe", timeout: 120000, shell: true, env: childEnv },
       );
       if (fsExistsSync(bindingPath)) {

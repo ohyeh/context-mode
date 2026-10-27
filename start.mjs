@@ -487,7 +487,7 @@ import "./hooks/ensure-deps.mjs";
   const NPM_INSTALL_BG_PKGS = ["turndown", "turndown-plugin-gfm", "@mixmark-io/domino"];
   const IS_WIN32 = process.platform === "win32";
   const NPM_BIN = IS_WIN32 ? "npm.cmd" : "npm";
-  const NPM_FLAGS = ["--no-package-lock", "--no-save", "--silent", "--no-audit", "--no-fund"];
+  const NPM_FLAGS = ["--no-package-lock", "--no-save", "--silent", "--no-audit", "--no-fund", "--no-bin-links"];
   // #861: on Windows the npm shim is `npm.cmd`, which needs `shell: true` to
   // run — but Node DROPS the `cwd` option when `shell: true`, so the spawned
   // cmd.exe inherits an arbitrary working dir (C:\Windows under Claude Code).
