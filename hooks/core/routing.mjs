@@ -666,6 +666,8 @@ function getPlatformSettingsPath(platform) {
  * @param {boolean} [options.mcpToolsAvailable=true] - False when the current
  *   caller context cannot invoke ctx_* MCP tools even though an MCP server is
  *   live on the machine (Claude Code fixed-tool subagents — #794).
+ * @param {string} [options.permissionMode] - The hook payload's `permission_mode`; `auto`
+ *   leaves an Agent prompt unchanged.
  */
 export function routePreToolUse(toolName, toolInput, projectDir, platform, sessionId, options = {}) {
   const mcpToolsAvailable = options.mcpToolsAvailable !== false;
@@ -892,6 +894,9 @@ export function routePreToolUse(toolName, toolInput, projectDir, platform, sessi
   // ─── Agent: inject context-mode routing into subagent prompts ───
   // Subagents cannot use ctx commands (stats/doctor/upgrade/purge) — omit that section (#233)
   if (canonical === "Agent") {
+    // Claude Code auto mode refuses a call whose input a hook changed after the classifier
+    // reviewed it (2.1.331: every Agent call was blocked), so the prompt is left as written there.
+    if (options.permissionMode === "auto") return null;
     const subagentType = toolInput.subagent_type ?? "";
     // Detect the correct field name for the prompt/request/objective/question/query
     const fieldName = ["prompt", "request", "objective", "question", "query", "task"].find(f => f in toolInput) ?? "prompt";

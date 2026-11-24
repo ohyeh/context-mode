@@ -169,6 +169,7 @@ await runHook(async () => {
   // ─── Route and format response ───
   const decision = routePreToolUse(tool, toolInput, projectDir, "claude-code", getSessionId(input), {
     mcpToolsAvailable: !isSubagentContext,
+    permissionMode: input.permission_mode,
   });
   const response = formatDecision("claude-code", decision);
 
